@@ -1,23 +1,8 @@
 <template>
   <div class="reports">
-    <h1>Reports</h1>
-    <h2>KMOM01</h2>
-    <h3>Project setup</h3>
-    <p>npm install</p>
-    <h3>Compiles and hot-reloads for development</h3>
-    <p>npm run serve</p>
-    <h3>Compiles and minifies for production</h3>
-    <p>npm run build</p>
-    <h3>Lints and fixes files</h3>
-    <p>npm run lint</p>
-    <h3>Customize configuration</h3>
-    <p>
-      See
-      <a href="https://cli.vuejs.org/config/">[Configuration Reference]</a>
-    </p>
-
-    <h3>Github repo</h3>
-    <a href="https://github.com/ollebergkvist/jsramverk">Jsramverk</a>
+    <router-link to="/reports/week/1" class="d-block">Week 1</router-link>
+    <router-link to="/reports/week/2" class="d-block">Week 2</router-link>
+    <!-- <router-link to="/reports/week/kmom03" class="d-block>Week 3</router-link> -->
   </div>
 </template>
 
@@ -28,3 +13,4 @@ h1 {
 }
 </style>
 
+<script></script>

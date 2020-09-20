@@ -1,18 +1,8 @@
 <template>
   <div class="home">
-    <h1>{{ msg }}</h1>
-    <p>
-      I'm a multidisciplinary developer working in the cross section of
-      aesthetics and technology. I help clients with tailor-made
-      developments, based on concrete concepts and sophisticated user
-      centered experiences, into real business results. With more then 3
-      years experience in the industry, I'm focusing on front and backend
-      development, user experience and brand identity.
-    </p>
-    <p>
-      This website was created as part of the BTH course "Jsramverk",
-      showcasing front end development with the Javascript framework Vue.
-    </p>
+    <h1 v-if="jsonArray">{{ jsonArray.data.title }}</h1>
+    <p v-if="jsonArray">{{ jsonArray.data.paragraph1 }}</p>
+    <p v-if="jsonArray">{{ jsonArray.data.paragraph2 }}</p>
     <h3>Links</h3>
     <ul>
       <li>
@@ -39,10 +29,34 @@
 </template>
 
 <script>
+import axios from "axios";
 export default {
-  name: "HelloWorld",
-  props: {
-    msg: String,
+  data() {
+    return {
+      jsonArray: "",
+    };
+  },
+  mounted() {
+    axios({
+      method: "GET",
+      url: "http://localhost:1337/",
+    }).then(
+      (result) => {
+        this.jsonArray = result.data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+
+    // (async function () {
+    //   try {
+    //     const result = await axios.get("http://localhost:1337/");
+    //     this.jsonArray = result.data;
+    //   } catch (error) {
+    //     console.error(error);
+    //   }
+    // })();
   },
 };
 </script>
@@ -52,9 +66,6 @@ export default {
 h1 {
   letter-spacing: 0.05em;
   text-transform: uppercase;
-}
-h3 {
-  margin: 40px 0 0;
 }
 ul {
   list-style-type: none;

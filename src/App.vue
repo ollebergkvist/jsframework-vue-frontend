@@ -24,11 +24,11 @@ export default {
 @import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap");
 
 html {
-  font-size: 16px;
+  font-size: 16px !important;
 }
 
 body {
-  line-height: 1.4;
+  line-height: 1.4 !important;
   display: flex;
   justify-content: center;
   background: #304352; /* fallback for old browsers */
@@ -67,15 +67,15 @@ img {
 
 p {
   margin-top: 0;
-  font-size: 1rem;
+  font-size: 1rem !important;
   line-height: 1.4;
-  margin-bottom: 1.4rem;
+  margin-bottom: 1.4rem !important;
   overflow: hidden;
   max-width: 55ch;
 }
 
 a {
-  color: white;
+  color: white !important;
 }
 
 .divider {
@@ -89,25 +89,30 @@ a {
 h1,
 h2,
 h4 {
-  margin-top: 0;
+  margin-top: 0 !important;
 }
 
 h1 {
   font-size: 2.4rem;
-  margin-bottom: 2.8rem;
+  margin-bottom: 2.8rem !important;
 }
 
 h2 {
   font-size: 2rem;
-  margin-bottom: 1.4rem;
-}
-
-h4 {
-  font-size: 1.4rem;
-  margin-bottom: 0;
+  margin-bottom: 1.4rem !important;
 }
 
 h3 {
-  text-transform: uppercase;
+  font-size: 1.6rem;
+  margin-bottom: 1.4rem !important;
+}
+
+h4 {
+  font-size: 1.2rem;
+  margin-bottom: 1.4rem !important;
+}
+
+h3 {
+  text-transform: uppercase !important;
 }
 </style>
