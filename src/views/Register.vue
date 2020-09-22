@@ -38,6 +38,7 @@
 
 <script>
 import axios from "axios";
+let config = require("../config/config");
 export default {
   data() {
     return {
@@ -54,7 +55,7 @@ export default {
     getFormValues() {
       axios({
         method: "POST",
-        url: "http://localhost:1337/register",
+        url: config.url + "/register",
         data: {
           email: this.form.email,
           password: this.form.password,

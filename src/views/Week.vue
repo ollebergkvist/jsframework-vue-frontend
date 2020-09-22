@@ -18,6 +18,7 @@ h1 {
 <script>
 import VueMarkdown from "vue-markdown";
 import axios from "axios";
+let config = require("../config/config");
 export default {
   data() {
     return {
@@ -31,7 +32,7 @@ export default {
     getData(id) {
       axios({
         method: "GET",
-        url: "http://localhost:1337/reports/week/" + id,
+        url: config.url + "/reports/week/" + id,
       }).then(
         (result) => {
           this.jsonArray = result.data.data;

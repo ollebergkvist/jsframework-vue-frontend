@@ -32,11 +32,17 @@ const routes = [
         component: () => import("../views/Login.vue"),
     },
     {
+        path: "/logout",
+        name: "Logout",
+        redirect: "/login",
+    },
+    {
         path: "/dashboard",
         name: "Dashboard",
         component: () => import("../views/Dashboard.vue"),
         beforeEnter: (to, from, next) => {
-            if (from.name !== "Login" && !auth.token) next({ name: "Login" });
+            console.log(from.name);
+            if (!auth.token) next({ name: "Login" });
             else next();
         },
     },

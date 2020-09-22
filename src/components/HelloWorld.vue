@@ -30,6 +30,7 @@
 
 <script>
 import axios from "axios";
+import config from "../config/config";
 export default {
   data() {
     return {
@@ -39,7 +40,7 @@ export default {
   mounted() {
     axios({
       method: "GET",
-      url: "http://localhost:1337/",
+      url: config.url,
     }).then(
       (result) => {
         this.jsonArray = result.data;

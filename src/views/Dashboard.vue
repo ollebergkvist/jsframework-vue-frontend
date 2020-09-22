@@ -2,6 +2,7 @@
   <div class="dashboard">
     <h1>User dashboard (Signed in)</h1>
     <div class="create-report">
+      <router-link to="/logout" class="d-block">Logout</router-link>
       <h4>Create report</h4>
       <b-form v-on:submit.prevent="createReport">
         <b-form-group
@@ -82,7 +83,7 @@ h1 {
 <script>
 import axios from "axios";
 let auth = require("../models/auth");
-console.log("Dashboard:" + auth.token);
+console.log("Token när vi loggar in dashboard:" + auth.token);
 export default {
   data() {
     return {

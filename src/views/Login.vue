@@ -38,9 +38,13 @@
 
 <script>
 let auth = require("../models/auth");
-auth.token = "";
+let config = require("../config/config");
+
 import axios from "axios";
 export default {
+  mounted() {
+    this.clearAuth();
+  },
   data() {
     return {
       form: {
@@ -55,7 +59,7 @@ export default {
     getFormValues() {
       axios({
         method: "POST",
-        url: "http://localhost:1337/login",
+        url: config.url + "/login",
         data: {
           email: this.form.email,
           password: this.form.password,
@@ -64,14 +68,22 @@ export default {
         .then(
           (result) => {
             auth.token = result.data.data.token;
-            console.log(auth.token);
+            console.log("Token:" + auth.token);
           },
           (error) => {
             console.error(error);
             this.flag = 1;
           }
         )
-        .then(() => this.$router.push({ name: "Dashboard" }));
+        .then(() => {
+          if (auth.token) {
+            this.$router.push({ name: "Dashboard" });
+          }
+        });
+    },
+    clearAuth() {
+      auth.token = "";
+      console.log("Token tömd?" + auth.token);
     },
   },
 };
