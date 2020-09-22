@@ -1,5 +1,8 @@
 <template>
   <div class="home">
+    <div v-if="!jsonArray">
+      <img src="../assets/preloader.svg" alt="preloader" id="loading-gif" width="50px" />
+    </div>
     <h1 v-if="jsonArray">{{ jsonArray.data.title }}</h1>
     <p v-if="jsonArray">{{ jsonArray.data.paragraph1 }}</p>
     <p v-if="jsonArray">{{ jsonArray.data.paragraph2 }}</p>

@@ -1,6 +1,9 @@
 <template>
   <div class="week">
     <h1>Week {{ $route.params.id }}</h1>
+    <div v-if="!jsonArray.markdown">
+      <img src="../assets/preloader.svg" alt="preloader" id="loading-gif" width="50px" />
+    </div>
     <vue-markdown v-if="jsonArray.markdown">{{ jsonArray.markdown }}</vue-markdown>
     <div v-else>
       <p>Nothing to display</p>
