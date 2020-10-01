@@ -1,6 +1,8 @@
 # Jsframework-vue-frontend
 
-## Project setup
+[![Build Status](https://travis-ci.org/ollebergkvist/jsframework-vue-frontend.svg?branch=master)](https://travis-ci.org/ollebergkvist/jsframework-vue-frontend)
+
+### Project setup
 
 ```
 npm install
