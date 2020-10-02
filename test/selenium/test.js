@@ -32,7 +32,7 @@ function assertH1(target) {
 }
 
 function assertH4(target) {
-    browser.findElement(By.css("h2")).then(function(element) {
+    browser.findElement(By.css("h4")).then(function(element) {
         element.getText().then(function(text) {
             assert.equal(text, target);
         });
