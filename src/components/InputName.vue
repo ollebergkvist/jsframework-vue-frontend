@@ -1,24 +1,20 @@
 <template>
   <div id="nameInput" v-show="!isLogged">
-    <div class="field is-grouped">
-      <div class="control">
-        <input
-          v-model="userName"
-          v-on:keydown.enter="sendUserName"
-          class="input is-primary"
-          placeholder="Your name"
-        />
-      </div>
-      <div class="control">
-        <button
-          v-on:click="sendUserName"
-          :disabled="!userName"
-          class="button is-primary"
-        >
-          Enter
-        </button>
-      </div>
+    <div class="form-group">
+      <input
+        v-model="userName"
+        v-on:keydown.enter="sendUserName"
+        class="form-control"
+        placeholder="Your name"
+      />
     </div>
+    <button
+      v-on:click="sendUserName"
+      :disabled="!userName"
+      class="btn btn-primary btn-block mb-4"
+    >
+      Enter
+    </button>
   </div>
 </template>
 

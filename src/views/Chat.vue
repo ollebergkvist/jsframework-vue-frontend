@@ -1,21 +1,13 @@
 <template>
   <div class="chat">
     <h1>Websocket chat</h1>
+
     <!-- user list -->
     <div class="user-list">
-      <!-- <users v-bind:users="users"></users> -->
-      <h4 class="title is-4">Current users ({{ users.length }})</h4>
-      <ul>
-        <li v-for="user in users" :key="user">
-          <div class="content">
-            <p>
-              <strong>{{ user }}</strong>
-            </p>
-          </div>
-        </li>
-      </ul>
+      <users v-bind:users="users"></users>
     </div>
-    <!-- inputs user name -->
+
+    <!-- user input -->
     <input-name
       v-bind:is-logged="isLogged"
       v-on:set-name="setName"
@@ -26,22 +18,15 @@
       <h4>Messages</h4>
       <div class="messages">
         <ul>
-          <li v-for="message in messages" :key="message">
-            <!-- <message v-bind:message-data="message"></message> -->
-            <div class="media-content">
-              <div class="content">
-                <p>
-                  <strong>{{ messages.user }}</strong>
-                  <small>{{ messages.date }}</small>
-                  <br />
-                  {{ messages.text }}
-                </p>
-              </div>
+          <li v-for="(message, index) in messages" :key="index">
+            <div class="message">
+              <message v-bind:message-data="message"></message>
             </div>
           </li>
         </ul>
       </div>
-      <!-- inputs new message -->
+
+      <!-- new message input  -->
       <input-message v-on:send-message="sendMessage"></input-message>
     </div>
   </div>
@@ -55,49 +40,39 @@ var socket = io("http://localhost:1339");
 // Import components
 import InputMessage from "../components/InputMessage";
 import InputName from "../components/InputName";
-// import Message from "../components/Message";
-// import Users from "../components/Users";
+import Message from "../components/Message";
+import Users from "../components/Users";
 
 export default {
   data: function () {
     return {
       messages: [],
       users: [],
-      userName: "",
+      user: "",
       isLogged: false,
     };
   },
-  created: function () {
-    console.log("messages before: " + this.messages);
-    console.log("users before: " + this.users);
-
-    // // Init user list. Updates user list when the client init
-    socket.on("update-users", function (users) {
-      console.log(users);
-      console.log("users: " + users.id);
-      console.log("users: " + users.name);
-      this.users = users;
-      console.log("update-users: " + this.users);
+  mounted: function () {
+    // Init user list. Updates user list when the client init
+    socket.on("active-user-list", (user) => {
+      this.users = user;
     });
 
-    // // Init chat event. Updates the initial chat with current messages
+    socket.on("chat-message", (message) => {
+      console.log(message);
+      this.messages.push(message);
+    });
+
+    // Init user list. Updates user list when the client init
+    socket.on("add-user", (user) => {
+      this.users.push(user);
+    });
+  },
+  created: function () {
+    // // // Init chat event. Updates the initial chat with current messages
     socket.on("init-chat", function (messages) {
       this.messages = messages;
       console.log("init-chat: " + this.messages);
-    });
-
-    // Client Socket events
-    // When the server emits a message, the client updates message list
-    socket.on("read-message", function (message) {
-      this.messages.push({
-        text: message.text,
-        user: message.user,
-        date: message.date,
-      });
-      console.log("messages: " + message.text);
-      console.log("messages: " + message.user);
-      console.log("messages: " + message.date);
-      console.log("read-message: " + this.messages);
     });
   },
   updated: function () {
@@ -105,17 +80,15 @@ export default {
   },
   methods: {
     sendMessage: function (message) {
-      socket.emit("send-message", {
+      socket.emit("chat-message", {
         message: message,
-        user: this.userName,
+        user: this.user,
       });
-      console.log("sendMessage " + message);
     },
-    setName: function (userName) {
-      this.userName = userName;
+    setName: function (user) {
+      this.user = user;
       this.isLogged = true;
-      socket.emit("add-user", this.userName);
-      console.log("setName " + userName);
+      socket.emit("add-user", user);
     },
     scrollToEnd: function () {
       var container = this.$el.querySelector(".messages");
@@ -125,20 +98,29 @@ export default {
   components: {
     "input-name": InputName,
     "input-message": InputMessage,
-    // "users": Users,
-    // "message": Message,
+    users: Users,
+    message: Message,
   },
 };
 </script>
 
 <style>
+.messages {
+  overflow: auto;
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+}
+
 .form-text {
   color: white !important;
 }
 
 .messages {
   width: 100%;
-  height: 30vh;
+  height: 40vh;
   border: 1px solid #ccc;
   border-radius: 4px;
   margin-bottom: 2rem;
@@ -148,12 +130,39 @@ export default {
   background-color: #ccc;
 }
 
-.new-message {
+.message {
+  padding: 1rem;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  color: #333;
   width: 100%;
-  height: 5vh;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  margin-bottom: 2rem;
+  height: auto;
+  border: 1px solid whitesmoke;
+  border-radius: 8px;
+  margin-bottom: 1rem;
   font-size: 1rem;
+  background-color: whitesmoke;
+}
+
+.message p {
+  margin-bottom: 0 !important;
+}
+
+.message-bottom {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.message-date {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.message-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
 }
 </style>

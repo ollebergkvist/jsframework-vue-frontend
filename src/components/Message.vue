@@ -1,18 +1,22 @@
 <template>
-    <div class="media-content">
-        <div class="content">
-            <p>
-                <strong>{{ messageData.user }}</strong>
-                <small>{{ messageData.date }}</small>
-                <br />
-                {{ messageData.text }}
-            </p>
-        </div>
+  <div class="message-container">
+    <div class="message-date">
+      <span
+        ><small>{{ messageData.date }}</small></span
+      >
     </div>
+    <div>
+      <span
+        ><small>{{ messageData.user }}:</small></span
+      >
+      <br />
+      <span>{{ messageData.text }} </span>
+    </div>
+  </div>
 </template>
 
 <script>
 export default {
-    props: ["messageData"],
+  props: ["messageData"],
 };
 </script>
