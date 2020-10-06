@@ -68,6 +68,24 @@ export default {
     };
   },
   created: function () {
+    console.log("messages before: " + this.messages);
+    console.log("users before: " + this.users);
+
+    // // Init user list. Updates user list when the client init
+    socket.on("update-users", function (users) {
+      console.log(users);
+      console.log("users: " + users.id);
+      console.log("users: " + users.name);
+      this.users = users;
+      console.log("update-users: " + this.users);
+    });
+
+    // // Init chat event. Updates the initial chat with current messages
+    socket.on("init-chat", function (messages) {
+      this.messages = messages;
+      console.log("init-chat: " + this.messages);
+    });
+
     // Client Socket events
     // When the server emits a message, the client updates message list
     socket.on("read-message", function (message) {
@@ -76,23 +94,10 @@ export default {
         user: message.user,
         date: message.date,
       });
-    });
-
-    // // When user connects, the server emits user-connected event which updates user list
-    socket.on("add-user", function (userId) {
-      this.users.push(userId);
-      console.log("Client user-connected: " + userId);
-    });
-
-    // // Init chat event. Updates the initial chat with current messages
-    socket.on("init-chat", function (messages) {
-      console.log("Client init-chat: " + messages);
-      this.messages = messages;
-    });
-
-    // // Init user list. Updates user list when the client init
-    socket.on("update-users", function (users) {
-      this.users = users;
+      console.log("messages: " + message.text);
+      console.log("messages: " + message.user);
+      console.log("messages: " + message.date);
+      console.log("read-message: " + this.messages);
     });
   },
   updated: function () {
@@ -104,11 +109,13 @@ export default {
         message: message,
         user: this.userName,
       });
+      console.log("sendMessage " + message);
     },
     setName: function (userName) {
       this.userName = userName;
       this.isLogged = true;
       socket.emit("add-user", this.userName);
+      console.log("setName " + userName);
     },
     scrollToEnd: function () {
       var container = this.$el.querySelector(".messages");
