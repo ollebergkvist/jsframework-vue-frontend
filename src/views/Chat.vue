@@ -35,7 +35,7 @@
 <script>
 // Socket.io
 import io from "socket.io-client";
-var socket = io("http://localhost:1339");
+var socket = io(process.env.VUE_APP_SERVER);
 
 // Import components
 import InputMessage from "../components/InputMessage";
