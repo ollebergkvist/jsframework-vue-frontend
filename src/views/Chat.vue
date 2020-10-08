@@ -53,26 +53,24 @@ export default {
     };
   },
   mounted: function () {
-    // Init user list. Updates user list when the client init
+    // Init user list. Updates user list when client connects
     socket.on("active-user-list", (user) => {
       this.users = user;
+      socket.emit("get-history");
+    });
+
+    // Init message list. Updates message history when client connects
+    socket.on("receive-history", (history) => {
+      this.messages = history;
     });
 
     socket.on("chat-message", (message) => {
-      console.log(message);
       this.messages.push(message);
     });
 
     // Init user list. Updates user list when the client init
     socket.on("add-user", (user) => {
       this.users.push(user);
-    });
-  },
-  created: function () {
-    // // // Init chat event. Updates the initial chat with current messages
-    socket.on("init-chat", function (messages) {
-      this.messages = messages;
-      console.log("init-chat: " + this.messages);
     });
   },
   updated: function () {
