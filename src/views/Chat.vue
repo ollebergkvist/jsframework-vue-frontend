@@ -20,7 +20,10 @@
         <ul>
           <li v-for="(message, index) in messages" :key="index">
             <div class="message">
-              <message v-bind:message-data="message"></message>
+              <message
+                v-bind:message-data="message"
+                v-bind:user="user"
+              ></message>
             </div>
           </li>
         </ul>
@@ -35,7 +38,7 @@
 <script>
 // Socket.io
 import io from "socket.io-client";
-var socket = io(process.env.VUE_APP_SERVER);
+var socket = io(process.env.VUE_APP_LOCAL_SERVER);
 
 // Import components
 import InputMessage from "../components/InputMessage";
@@ -129,18 +132,15 @@ ul {
 }
 
 .message {
-  padding: 1rem;
   display: flex;
   justify-content: start;
   align-items: center;
   color: #333;
   width: 100%;
   height: auto;
-  border: 1px solid whitesmoke;
   border-radius: 8px;
   margin-bottom: 1rem;
   font-size: 1rem;
-  background-color: whitesmoke;
 }
 
 .message p {
@@ -158,9 +158,23 @@ ul {
   justify-content: flex-end;
 }
 
-.message-container {
+.message-user {
   display: flex;
   width: 100%;
+  height: 100%;
   flex-direction: column;
+  background-color: whitesmoke;
+  border: 1px solid whitesmoke;
+  padding: 1rem;
+}
+
+.message-server {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  background-color: #0078ff;
+  border: 1px solid #0078ff;
+  padding: 1rem;
 }
 </style>
